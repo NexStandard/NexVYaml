@@ -20,8 +20,6 @@ namespace VYaml.Serialization
             {
                 if (Check<T>.Registered) return;
 
-                var type = typeof(T);
-                TryInvokeRegisterYamlFormatter(type);
             }
         }
 
@@ -43,7 +41,6 @@ namespace VYaml.Serialization
             return true;
         }
 
-        [Preserve]
         public static void Register<T>(IYamlFormatter<T> formatter)
         {
             Check<T>.Registered = true; // avoid to call Cache() constructor called.
