@@ -27,7 +27,6 @@ namespace VYaml.Serialization
 
         static bool TryInvokeRegisterYamlFormatter(Type type)
         {
-            if (type.GetCustomAttribute<YamlObjectAttribute>() == null) return false;
 
             var m = type.GetMethod("__RegisterVYamlFormatter",
                 BindingFlags.Public |
