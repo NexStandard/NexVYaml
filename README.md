@@ -67,7 +67,7 @@ Require Unity 2021.3 or later.
 You can add following url to Unity Package Manager.
 
 ```
-https://github.com/hadashiA/VYaml.git?path=VYaml.Unity/Assets/VYaml#0.13.0
+https://github.com/hadashiA/VYaml.git?path=VYaml.Unity/Assets/VYaml#0.13.1
 ```
 
 ## Usage
@@ -285,7 +285,7 @@ public partial class Person
         // ...
     }
 
-    // If there are multiple constructors, then [MemoryPackConstructor] should be used
+    // If there are multiple constructors, then [YamlConstructor] should be used
     [YamlConstructor]
     public Person(int age, string name)
     {
