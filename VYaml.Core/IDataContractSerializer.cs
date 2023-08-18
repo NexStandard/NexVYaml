@@ -1,6 +1,6 @@
 ﻿namespace StrideSourceGened
 {
-    public interface ISerializerRegistry
+    public interface IDataContractSerializer
     {
         public void Register();
     }

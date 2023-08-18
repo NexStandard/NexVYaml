@@ -18,6 +18,10 @@
         <TargetFiles1 Include="$(MSBuildProjectDirectory)\**\*.cs" Exclude="**\bin\**\*.*;**\obj\**\*.*" />
     </ItemGroup>
     <ItemGroup>
+      <TargetFiles1 Remove="IDataContractSerializer.cs" />
+      <TargetFiles1 Remove="NexYamlSerializerRegistry.cs" />
+    </ItemGroup>
+    <ItemGroup>
       <ProjectReference Include="C:\Godot\NexVYaml\VYaml.Annotations\VYaml.Annotations.csproj" />
     </ItemGroup>
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
