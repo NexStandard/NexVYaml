@@ -46,7 +46,7 @@ namespace VYaml.Serialization
             try
             {
                 contextLocal.Reset();
-                var formatter = contextLocal.Resolver.GetFormatterWithVerify<T>();
+                var formatter = NexYamlSerializerRegistry.Default.GetFormatterWithVerify<T>();
                 formatter.Serialize(ref emitter, value, contextLocal);
                 return writer.WrittenMemory;
             }
@@ -70,7 +70,7 @@ namespace VYaml.Serialization
                 var contextLocal = serializationContext ??= new YamlSerializationContext(options);
                 contextLocal.Reset();
 
-                var formatter = contextLocal.Resolver.GetFormatterWithVerify<T>();
+                var formatter = NexYamlSerializerRegistry.Default.GetFormatterWithVerify<T>();
                 formatter.Serialize(ref emitter, value, contextLocal);
             }
             finally

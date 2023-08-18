@@ -13,15 +13,14 @@ namespace VYaml.Serialization
 
     public static class YamlFormatterResolverExtensions
     {
-        static readonly Dictionary<Type, Func<IYamlFormatterResolver, IYamlFormatter>> FormatterGetters = new();
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IYamlFormatter<T> GetFormatterWithVerify<T>(this IYamlFormatterResolver resolver)
         {
             IYamlFormatter<T>? formatter;
             try
             {
-                formatter = resolver.GetFormatter<T>();
+                formatter = NexYamlSerializerRegistry.Default.GetFormatter<T>();
+                Console.WriteLine("");
             }
             catch (TypeInitializationException ex)
             {

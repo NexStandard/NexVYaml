@@ -9,17 +9,8 @@
         <Description>VYaml core apis</Description>
     </PropertyGroup>
 
-
-    <!-- Copy files for Unity -->
-    <PropertyGroup>
-        <DestinationRoot>$(MSBuildProjectDirectory)\..\VYaml.Unity\Assets\VYaml\Runtime</DestinationRoot>
-    </PropertyGroup>
     <ItemGroup>
         <TargetFiles1 Include="$(MSBuildProjectDirectory)\**\*.cs" Exclude="**\bin\**\*.*;**\obj\**\*.*" />
-    </ItemGroup>
-    <ItemGroup>
-      <TargetFiles1 Remove="IDataContractSerializer.cs" />
-      <TargetFiles1 Remove="NexYamlSerializerRegistry.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="C:\Godot\NexVYaml\VYaml.Annotations\VYaml.Annotations.csproj" />
