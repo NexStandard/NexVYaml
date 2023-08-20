@@ -5,29 +5,29 @@ namespace VYaml.Parser
 {
     public class Tag : ITokenContent
     {
+        public string Prefix { get; }
         public string Handle { get; }
-        public string Suffix { get; }
 
-        public Tag(string handle, string suffix)
+        public Tag(string prefix, string handle)
         {
+            Prefix = prefix;
             Handle = handle;
-            Suffix = suffix;
         }
 
-        public override string ToString() => $"{Handle}{Suffix}";
+        public override string ToString() => $"{Prefix}{Handle}";
 
         public bool Equals(string tagString)
         {
-            if (tagString.Length != Handle.Length + Suffix.Length)
+            if (tagString.Length != Prefix.Length + Handle.Length)
             {
                 return false;
             }
-            var handleIndex = tagString.IndexOf(Handle, StringComparison.Ordinal);
+            var handleIndex = tagString.IndexOf(Prefix, StringComparison.Ordinal);
             if (handleIndex < 0)
             {
                 return false;
             }
-            return tagString.IndexOf(Suffix, handleIndex, StringComparison.Ordinal) > 0;
+            return tagString.IndexOf(Handle, handleIndex, StringComparison.Ordinal) > 0;
         }
     }
 }

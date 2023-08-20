@@ -6,6 +6,7 @@ namespace VYaml.Serialization
 {
     public interface IYamlFormatter
     {
+        
     }
 
     public interface IYamlFormatter<T> : IYamlFormatter

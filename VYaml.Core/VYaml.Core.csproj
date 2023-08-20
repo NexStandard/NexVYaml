@@ -10,12 +10,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <TargetFiles1 Include="$(MSBuildProjectDirectory)\**\*.cs" Exclude="**\bin\**\*.*;**\obj\**\*.*" />
-    </ItemGroup>
-    <ItemGroup>
       <ProjectReference Include="C:\Godot\NexVYaml\VYaml.Annotations\VYaml.Annotations.csproj" />
     </ItemGroup>
-    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-        <Copy SourceFiles="@(TargetFiles1)" DestinationFiles="$(DestinationRoot)\%(RecursiveDir)%(Filename)%(Extension)" SkipUnchangedFiles="true" />
-    </Target>
 </Project>

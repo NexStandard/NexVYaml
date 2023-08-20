@@ -446,7 +446,7 @@ namespace VYaml.Parser
 
                         // Unity compatible mode
                         if (CurrentEventType == ParseEventType.DocumentStart &&
-                            currentTag?.Handle == "!u!")
+                            currentTag?.Prefix == "!u!")
                         {
                             UnityStrippedMark = tokenizer.TrySkipUnityStrippedSymbol();
                         }
