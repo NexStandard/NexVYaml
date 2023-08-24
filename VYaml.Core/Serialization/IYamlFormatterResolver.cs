@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
+using VYaml.Serialization.Resolvers;
 
 namespace VYaml.Serialization
 {
@@ -19,14 +20,19 @@ namespace VYaml.Serialization
             IYamlFormatter<T>? formatter;
             try
             {
-                formatter = NexYamlSerializerRegistry.Default.GetFormatter<T>();
-                Console.WriteLine("");
+                Type type = typeof(T);
+                if (type.IsInterface ||type.IsAbstract)
+                {
+                    formatter = new RedirectFormatter<T>();
+                }
+                else
+                {
+                    formatter = NexYamlSerializerRegistry.Default.GetFormatter<T>();
+
+                }
             }
             catch (TypeInitializationException ex)
             {
-                // The fact that we're using static constructors to initialize this is an internal detail.
-                // Rethrow the inner exception if there is one.
-                // Do it carefully so as to not stomp on the original callstack.
                 ExceptionDispatchInfo.Capture(ex.InnerException ?? ex).Throw();
                 return default!; // not reachable
             }

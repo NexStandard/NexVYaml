@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using VYaml.Emitter;
 using VYaml.Internal;
 using VYaml.Parser;
+using VYaml.Serialization.Resolvers;
 
 namespace VYaml.Serialization
 {
@@ -46,8 +47,7 @@ namespace VYaml.Serialization
             try
             {
                 contextLocal.Reset();
-                var formatter = NexYamlSerializerRegistry.Default.GetFormatterWithVerify<T>();
-                formatter.Serialize(ref emitter, value, contextLocal);
+                new RedirectFormatter<T>().Serialize(ref emitter, value, contextLocal);
                 return writer.WrittenMemory;
             }
             finally

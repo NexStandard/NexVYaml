@@ -91,22 +91,42 @@ namespace VYaml.Serialization
         public void RegisterInterface<T>(IYamlFormatter<T> formatter, Type interfaceType)
         {
             Type keyType = typeof(T);
-            InterfaceBuffer[interfaceType][keyType] = formatter;
+            if (!InterfaceBuffer.ContainsKey(interfaceType))
+            {
+                InterfaceBuffer.Add(interfaceType, new());
+            }
+            if (!InterfaceBuffer[interfaceType].ContainsKey(keyType))
+            {
+                InterfaceBuffer[interfaceType].Add(keyType, formatter);
+            }
+            else
+            {
+                InterfaceBuffer[interfaceType][keyType] = formatter;
+            }
         }
         public void RegisterAbstractClass<T>(IYamlFormatter<T> formatter, Type interfaceType)
         {
             Type keyType = typeof(T);
             AbstractClassesBuffer[interfaceType][keyType] = formatter;
         }
-        public IYamlFormatter<T> FindInterfaceFormatter<T>(Tag tag)
+        public IYamlFormatter FindInterfaceFormatter<T>(Tag tag)
         {
             Type type = Type.GetType(tag.Handle);
-            return (IYamlFormatter<T>)InterfaceBuffer[typeof(T)][type];
+            return InterfaceBuffer[typeof(T)][type];
         }
-        public IYamlFormatter<T> FindAbstractFormatter<T>(Tag tag)
+        public IYamlFormatter FindInterfaceTypeBased<T>(Type target)
+        {
+            return InterfaceBuffer[typeof(T)][target];
+        }
+        public IYamlFormatter FindAbstractTypeBased<T>(Type target)
+        {
+            return InterfaceBuffer[typeof(T)][target];
+        }
+
+        public IYamlFormatter FindAbstractFormatter<T>(Tag tag)
         {
             Type type = Type.GetType(tag.Handle);
-            return (IYamlFormatter<T>)AbstractClassesBuffer[typeof(T)][type];
+            return AbstractClassesBuffer[typeof(T)][type];
         }
     }
 }
