@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace VYaml.Internal
 {
-    ref struct ExpandBuffer<T>
+    struct ExpandBuffer<T>
     {
         const int MinimumGrow = 4;
         const int GrowFactor = 200;

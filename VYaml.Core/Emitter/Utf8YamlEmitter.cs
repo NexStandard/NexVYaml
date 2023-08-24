@@ -24,7 +24,7 @@ namespace VYaml.Emitter
         FlowSequenceEntry,
     }
 
-    public ref struct Utf8YamlEmitter
+    public struct Utf8YamlEmitter
     {
         static byte[] whiteSpaces =
         {
