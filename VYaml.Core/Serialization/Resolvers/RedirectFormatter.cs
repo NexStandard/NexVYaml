@@ -28,7 +28,7 @@ namespace VYaml.Serialization.Resolvers
                 formatter = NexYamlSerializerRegistry.Default.GetFormatter<T>();
             }
             
-            return ((IYamlFormatter<T>)formatter).Deserialize(ref parser,context);
+            return default(T);
         }
 
         public IYamlFormatter<T1>? GetFormatter<T1>()
@@ -52,8 +52,8 @@ namespace VYaml.Serialization.Resolvers
             {
                 formatter = NexYamlSerializerRegistry.Default.GetFormatter<T>();
             }
-            
-            ???formatter???.Serialize(ref emitter, value, context);
+            MethodInfo method = formatter.GetType().GetMethod("Serialize");
+            method.Invoke(formatter, new object[] { emitter, value, context });
         }
     }
 }
