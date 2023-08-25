@@ -23,7 +23,7 @@ namespace VYaml.Emitter
         BlockMappingValue,
         FlowSequenceEntry,
     }
-
+    // TODO: If its ever possible to Invoke ref structs, change this to ref struct and ExpandBuffer, all invocations must be then changed to use the ref struct
     public struct Utf8YamlEmitter
     {
         static byte[] whiteSpaces =
