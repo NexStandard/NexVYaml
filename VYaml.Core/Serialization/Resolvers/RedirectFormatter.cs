@@ -46,7 +46,7 @@ namespace VYaml.Serialization.Resolvers
             }
             else if (type.IsAbstract)
             {
-                formatter = NexYamlSerializerRegistry.Default.FindInterfaceTypeBased<T>(value.GetType());
+                formatter = NexYamlSerializerRegistry.Default.FindAbstractTypeBased<T>(value.GetType());
             }
             else
             {
