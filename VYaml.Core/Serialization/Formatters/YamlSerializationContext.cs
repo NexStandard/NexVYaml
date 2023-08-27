@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.Buffers;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using VYaml.Emitter;
 using VYaml.Internal;
@@ -35,7 +36,16 @@ namespace VYaml.Serialization
         {
             Resolver.GetFormatterWithVerify<T>().Serialize(ref emitter, value, this);
         }
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SerializeCollection<T>(ref Utf8YamlEmitter emitter, T value)
+            where T : ICollection<T>
+        {
+            Resolver.GetFormatterWithVerify<T>().Serialize(ref emitter, value, this);
+        }
+        public void SerializeArray<T>(ref Utf8YamlEmitter emitter, T[] value)
+        {
+            new ArrayFormatter<T>().Serialize(ref emitter, value, this);
+        }
         public ArrayBufferWriter<byte> GetArrayBufferWriter()
         {
             return arrayBufferWriter ??= new ArrayBufferWriter<byte>(65536);
