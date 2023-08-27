@@ -40,7 +40,7 @@ namespace VYaml.Serialization.Resolvers
         {
             Type type = typeof(T);
             IYamlFormatter formatter;
-            if (type.IsInterface)
+             if (type.IsInterface)
             {
                 formatter = NexYamlSerializerRegistry.Default.FindInterfaceTypeBased<T>(value.GetType());
             }

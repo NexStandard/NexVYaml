@@ -107,7 +107,18 @@ namespace VYaml.Serialization
         public void RegisterAbstractClass<T>(IYamlFormatter<T> formatter, Type interfaceType)
         {
             Type keyType = typeof(T);
-            AbstractClassesBuffer[interfaceType][keyType] = formatter;
+            if (!AbstractClassesBuffer.ContainsKey(interfaceType))
+            {
+                AbstractClassesBuffer.Add(interfaceType, new());
+            }
+            if (!AbstractClassesBuffer[interfaceType].ContainsKey(keyType))
+            {
+                AbstractClassesBuffer[interfaceType].Add(keyType, formatter);
+            }
+            else
+            {
+                AbstractClassesBuffer[interfaceType][keyType] = formatter;
+            }
         }
         public IYamlFormatter FindInterfaceFormatter<T>(Tag tag)
         {
