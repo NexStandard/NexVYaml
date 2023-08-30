@@ -23,7 +23,15 @@ namespace VYaml.Serialization
                 Type type = typeof(T);
                 if (type.IsInterface ||type.IsAbstract)
                 {
+                    if(resolver is RedirectFormatter<T> redirector)
+                    {
+                        formatter = redirector;
+                    }
+                    else
+                    {
                     formatter = new RedirectFormatter<T>();
+
+                    }
                 }
                 else
                 {

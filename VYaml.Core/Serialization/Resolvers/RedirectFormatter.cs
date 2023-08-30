@@ -1,34 +1,31 @@
-﻿using System;
+﻿using Silk.NET.OpenXR;
+using Stride.Core.Shaders.Ast.Hlsl;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text;
 using VYaml.Emitter;
 using VYaml.Parser;
 
 namespace VYaml.Serialization.Resolvers
 {
+    
     internal class RedirectFormatter<T> : IYamlFormatter<T>,IYamlFormatterResolver
     {
         public T Deserialize(ref YamlParser parser, YamlDeserializationContext context)
         {
             var type = typeof(T);
-            IYamlFormatter formatter;
-            if (type.IsAbstract)
-            {
-                parser.TryGetCurrentTag(out var tag);
-                formatter = NexYamlSerializerRegistry.Default.FindAbstractFormatter<T>(tag);
-            }
-            else if(type.IsInterface)
-            {
-                parser.TryGetCurrentTag(out var tag);
-                formatter = NexYamlSerializerRegistry.Default.FindInterfaceFormatter<T>(tag);
-            }
-            else
-            {
-                formatter = NexYamlSerializerRegistry.Default.GetFormatter<T>();
-            }
+            parser.ReadWithVerify(ParseEventType.MappingStart);
+            parser.TryGetCurrentTag(out var tag);
             
-            return default(T);
+            var alias = NexYamlSerializerRegistry.Default.GetAliasType(tag.Handle);
+
+            var formatter = NexYamlSerializerRegistry.Default.GetFormatter(alias);
+            MethodInfo method = formatter.GetType().GetMethod(nameof(Deserialize));
+            return (T)method.Invoke(formatter, new object[] { parser,context });
         }
 
         public IYamlFormatter<T1>? GetFormatter<T1>()

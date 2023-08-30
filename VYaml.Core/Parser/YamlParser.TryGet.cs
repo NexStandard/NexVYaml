@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace VYaml.Parser
 {
-    public ref partial struct YamlParser
+    public partial struct YamlParser
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool IsNullScalar()

@@ -7,7 +7,7 @@ using VYaml.Internal;
 
 namespace VYaml.Parser
 {
-    ref struct ScalarPool
+    struct ScalarPool
     {
         ExpandBuffer<Scalar> queue;
 

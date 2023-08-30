@@ -63,7 +63,7 @@ namespace VYaml.Parser
         End,
     }
 
-    public ref partial struct YamlParser
+    public partial struct YamlParser
     {
         public static YamlParser FromBytes(Memory<byte> bytes)
         {
@@ -443,13 +443,6 @@ namespace VYaml.Parser
                         var anchorName = tokenizer.TakeCurrentTokenContent<Scalar>().ToString();
                         var anchorId = RegisterAnchor(anchorName);
                         currentAnchor = new Anchor(anchorName, anchorId);
-
-                        // Unity compatible mode
-                        if (CurrentEventType == ParseEventType.DocumentStart &&
-                            currentTag?.Prefix == "!u!")
-                        {
-                            UnityStrippedMark = tokenizer.TrySkipUnityStrippedSymbol();
-                        }
                         tokenizer.Read();
                     }
                     break;

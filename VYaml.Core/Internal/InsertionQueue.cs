@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace VYaml.Internal
 {
-    ref struct InsertionQueue<T>
+    struct InsertionQueue<T>
     {
         const int MinimumGrow = 4;
         const int GrowFactor = 200;
