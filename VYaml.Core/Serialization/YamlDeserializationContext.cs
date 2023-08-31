@@ -1,11 +1,13 @@
 #nullable enable
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using VYaml.Parser;
 
 namespace VYaml.Serialization
 {
     public class YamlDeserializationContext
     {
+        static ByteArrayFormatter ByteArrayFormatter = new ByteArrayFormatter();
         public IYamlFormatterResolver Resolver { get; }
 
         readonly Dictionary<Anchor, object?> aliases = new();
@@ -25,7 +27,14 @@ namespace VYaml.Serialization
             var formatter = Resolver.GetFormatterWithVerify<T>();
             return DeserializeWithAlias(formatter, ref parser);
         }
-
+        public T[] DeserializeArray<T>(ref YamlParser parser)
+        {
+            return DeserializeWithAlias(new ArrayFormatter<T>(), ref parser);
+        }
+        public byte[] DeserializeByteArray(ref YamlParser parser)
+        {
+            return DeserializeWithAlias(ByteArrayFormatter, ref parser);
+        }
         public T DeserializeWithAlias<T>(IYamlFormatter<T> innerFormatter, ref YamlParser parser)
         {
             if (TryResolveCurrentAlias<T>(ref parser, out var aliasValue))
