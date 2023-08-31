@@ -18,6 +18,7 @@ namespace VYaml.Serialization
 
     public class YamlSerializationContext : IDisposable
     {
+        static ByteArrayFormatter ByteArrayFormatter = new ByteArrayFormatter();
         public IYamlFormatterResolver Resolver { get; }
         public YamlEmitOptions EmitOptions { get; }
 
@@ -45,6 +46,10 @@ namespace VYaml.Serialization
         public void SerializeArray<T>(ref Utf8YamlEmitter emitter, T[] value)
         {
             new ArrayFormatter<T>().Serialize(ref emitter, value, this);
+        }
+        public void SerializeByteArray(ref Utf8YamlEmitter emitter, byte[] value)
+        {
+            ByteArrayFormatter.Serialize(ref emitter, value, this);
         }
         public ArrayBufferWriter<byte> GetArrayBufferWriter()
         {
