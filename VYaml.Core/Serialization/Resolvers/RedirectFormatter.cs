@@ -6,7 +6,7 @@ using VYaml.Parser;
 namespace VYaml.Serialization.Resolvers
 {
     
-    internal class RedirectFormatter<T> : IYamlFormatter<T>,IYamlFormatterResolver
+    public class RedirectFormatter<T> : IYamlFormatter<T>,IYamlFormatterResolver
     {
         public T Deserialize(ref YamlParser parser, YamlDeserializationContext context)
         {
