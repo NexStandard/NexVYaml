@@ -89,7 +89,7 @@ namespace VYaml.Parser
 
         public bool End => CurrentEventType == ParseEventType.StreamEnd;
 
-        TokenType CurrentTokenType
+        public TokenType CurrentTokenType
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => tokenizer.CurrentTokenType;
@@ -98,7 +98,7 @@ namespace VYaml.Parser
         Utf8YamlTokenizer tokenizer;
         ParseState currentState;
         Scalar? currentScalar;
-        Tag? currentTag;
+        public Tag? currentTag;
         Anchor? currentAnchor;
         int lastAnchorId;
 

@@ -18,9 +18,9 @@ namespace VYaml.Serialization.Resolvers
         public T Deserialize(ref YamlParser parser, YamlDeserializationContext context)
         {
             var type = typeof(T);
-            parser.ReadWithVerify(ParseEventType.MappingStart);
-            parser.TryGetCurrentTag(out var tag);
-            
+            Tag tag = parser.currentTag;
+            var x = parser.CurrentTokenType;
+
             var alias = NexYamlSerializerRegistry.Default.GetAliasType(tag.Handle);
 
             var formatter = NexYamlSerializerRegistry.Default.GetFormatter(alias);
