@@ -63,7 +63,7 @@ namespace VYaml.Parser
         End,
     }
 
-    public partial struct YamlParser
+    public partial class YamlParser
     {
         public static YamlParser FromBytes(Memory<byte> bytes)
         {
@@ -81,7 +81,7 @@ namespace VYaml.Parser
         public ParseEventType CurrentEventType { get; private set; }
         public bool UnityStrippedMark { get; private set; }
 
-        public readonly Marker CurrentMark
+        public Marker CurrentMark
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => tokenizer.CurrentMark;
@@ -89,7 +89,7 @@ namespace VYaml.Parser
 
         public bool End => CurrentEventType == ParseEventType.StreamEnd;
 
-        public TokenType CurrentTokenType
+        TokenType CurrentTokenType
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => tokenizer.CurrentTokenType;
@@ -98,7 +98,7 @@ namespace VYaml.Parser
         Utf8YamlTokenizer tokenizer;
         ParseState currentState;
         Scalar? currentScalar;
-        public Tag? currentTag;
+        Tag? currentTag;
         Anchor? currentAnchor;
         int lastAnchorId;
 

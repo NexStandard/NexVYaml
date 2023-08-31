@@ -4,10 +4,10 @@ using System.Runtime.CompilerServices;
 
 namespace VYaml.Parser
 {
-    public partial struct YamlParser
+    public partial class YamlParser
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly bool IsNullScalar()
+        public bool IsNullScalar()
         {
             return CurrentEventType == ParseEventType.Scalar &&
                    (currentScalar == null ||
@@ -15,13 +15,13 @@ namespace VYaml.Parser
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly string? GetScalarAsString()
+        public string? GetScalarAsString()
         {
             return currentScalar?.ToString();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly bool TryGetScalarAsSpan(out ReadOnlySpan<byte> span)
+        public bool TryGetScalarAsSpan(out ReadOnlySpan<byte> span)
         {
             if (currentScalar is null)
             {
@@ -33,7 +33,7 @@ namespace VYaml.Parser
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly bool GetScalarAsBool()
+        public bool GetScalarAsBool()
         {
             if (currentScalar is { } scalar && scalar.TryGetBool(out var value))
             {
@@ -43,7 +43,7 @@ namespace VYaml.Parser
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly int GetScalarAsInt32()
+        public int GetScalarAsInt32()
         {
             if (currentScalar is { } scalar && scalar.TryGetInt32(out var value))
             {
@@ -53,7 +53,7 @@ namespace VYaml.Parser
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly long GetScalarAsInt64()
+        public long GetScalarAsInt64()
         {
             if (currentScalar is { } scalar && scalar.TryGetInt64(out var value))
             {
@@ -63,7 +63,7 @@ namespace VYaml.Parser
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly uint GetScalarAsUInt32()
+        public uint GetScalarAsUInt32()
         {
             if (currentScalar is { } scalar && scalar.TryGetUInt32(out var value))
             {
@@ -73,7 +73,7 @@ namespace VYaml.Parser
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly ulong GetScalarAsUInt64()
+        public ulong GetScalarAsUInt64()
         {
             if (currentScalar is { } scalar && scalar.TryGetUInt64(out var value))
             {
@@ -83,7 +83,7 @@ namespace VYaml.Parser
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly float GetScalarAsFloat()
+        public float GetScalarAsFloat()
         {
             if (currentScalar is { } scalar && scalar.TryGetFloat(out var value))
             {
@@ -93,7 +93,7 @@ namespace VYaml.Parser
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly double GetScalarAsDouble()
+        public double GetScalarAsDouble()
         {
             if (currentScalar is { } scalar && scalar.TryGetDouble(out var value))
             {
@@ -167,7 +167,7 @@ namespace VYaml.Parser
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly bool TryGetScalarAsString(out string? value)
+        public bool TryGetScalarAsString(out string? value)
         {
             if (currentScalar is { } scalar)
             {
@@ -179,7 +179,7 @@ namespace VYaml.Parser
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly bool TryGetScalarAsBool(out bool value)
+        public bool TryGetScalarAsBool(out bool value)
         {
             if (currentScalar is { } scalar)
                 return scalar.TryGetBool(out value);
@@ -188,7 +188,7 @@ namespace VYaml.Parser
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly bool TryGetScalarAsInt32(out int value)
+        public bool TryGetScalarAsInt32(out int value)
         {
             if (currentScalar is { } scalar)
                 return scalar.TryGetInt32(out value);
@@ -197,7 +197,7 @@ namespace VYaml.Parser
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly bool TryGetScalarAsInt64(out long value)
+        public bool TryGetScalarAsInt64(out long value)
         {
             if (currentScalar is { } scalar)
                 return scalar.TryGetInt64(out value);
@@ -206,7 +206,7 @@ namespace VYaml.Parser
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly bool TryGetScalarAsFloat(out float value)
+        public bool TryGetScalarAsFloat(out float value)
         {
             if (currentScalar is { } scalar)
                 return scalar.TryGetFloat(out value);
@@ -215,7 +215,7 @@ namespace VYaml.Parser
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly bool TryGetScalarAsDouble(out double value)
+        public bool TryGetScalarAsDouble(out double value)
         {
             if (currentScalar is { } scalar)
                 return scalar.TryGetDouble(out value);
@@ -224,7 +224,7 @@ namespace VYaml.Parser
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly bool TryGetCurrentTag(out Tag tag)
+        public bool TryGetCurrentTag(out Tag tag)
         {
             if (currentTag != null)
             {
@@ -236,7 +236,7 @@ namespace VYaml.Parser
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly bool TryGetCurrentAnchor(out Anchor anchor)
+        public bool TryGetCurrentAnchor(out Anchor anchor)
         {
             if (currentAnchor != null)
             {

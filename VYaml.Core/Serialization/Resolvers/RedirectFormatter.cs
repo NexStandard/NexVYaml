@@ -1,12 +1,5 @@
-﻿using Silk.NET.OpenXR;
-using Stride.Core.Shaders.Ast.Hlsl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using System;
 using System.Reflection;
-using System.Runtime.Serialization;
-using System.Text;
 using VYaml.Emitter;
 using VYaml.Parser;
 
@@ -18,8 +11,7 @@ namespace VYaml.Serialization.Resolvers
         public T Deserialize(ref YamlParser parser, YamlDeserializationContext context)
         {
             var type = typeof(T);
-            Tag tag = parser.currentTag;
-            var x = parser.CurrentTokenType;
+            parser.TryGetCurrentTag(out var tag);
 
             var alias = NexYamlSerializerRegistry.Default.GetAliasType(tag.Handle);
 
