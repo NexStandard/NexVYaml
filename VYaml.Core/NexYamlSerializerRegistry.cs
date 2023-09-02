@@ -156,7 +156,7 @@ namespace VYaml.Serialization
         }
         public IYamlFormatter FindAbstractTypeBased<T>(Type target)
         {
-            return InterfaceBuffer[typeof(T)][target];
+            return AbstractClassesBuffer[typeof(T)][target];
         }
 
         public IYamlFormatter FindAbstractFormatter<T>(Tag tag)
