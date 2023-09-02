@@ -19,7 +19,7 @@ namespace VYaml.Serialization.Resolvers
             MethodInfo method = formatter.GetType().GetMethod(nameof(Deserialize));
             return (T)method.Invoke(formatter, new object[] { parser,context });
         }
-
+        
         public void Serialize(ref Utf8YamlEmitter emitter, T value, YamlSerializationContext context)
         {
             Type type = typeof(T);
