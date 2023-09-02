@@ -29,8 +29,9 @@ namespace VYaml.Serialization.Resolvers
         {
             Type type = typeof(T);
             IYamlFormatter formatter;
-             if (type.IsInterface)
+            if (type.IsInterface)
             {
+
                 formatter = NexYamlSerializerRegistry.Default.FindInterfaceTypeBased<T>(value.GetType());
             }
             else if (type.IsAbstract)
@@ -39,7 +40,17 @@ namespace VYaml.Serialization.Resolvers
             }
             else
             {
-                formatter = NexYamlSerializerRegistry.Default.GetFormatter<T>();
+                if(type.IsGenericType)
+                {
+                    Type formatterType = NexYamlSerializerRegistry.Default.FindGenericFormatter<T>();
+                    Type closedType = formatterType.MakeGenericType(typeof(T).GenericTypeArguments);
+                    formatter = (IYamlFormatter)Activator.CreateInstance(closedType);
+                    
+                }
+                else
+                {
+                    formatter = NexYamlSerializerRegistry.Default.GetFormatter<T>();
+                }
             }
             MethodInfo method = formatter.GetType().GetMethod("Serialize");
             method.Invoke(formatter, new object[] { emitter, value, context });

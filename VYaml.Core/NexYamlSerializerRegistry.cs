@@ -1,7 +1,9 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using VYaml.Core;
 using VYaml.Parser;
 
 namespace VYaml.Serialization
@@ -75,7 +77,9 @@ namespace VYaml.Serialization
         };
         Dictionary<Type, Dictionary<Type, IYamlFormatter>> InterfaceBuffer = new();
         Dictionary<Type, Dictionary<Type, IYamlFormatter>> AbstractClassesBuffer = new();
+        TypeDictionary GenericFormatterBuffer = new();
         Dictionary<string,Type> TypeMap = new();
+        
         public IYamlFormatter<T>? GetFormatter<T>()
         {
             if (DefinedFormatters.ContainsKey(typeof(T)))
@@ -100,6 +104,14 @@ namespace VYaml.Serialization
             Type keyType = typeof(T);
             DefinedFormatters[keyType] = formatter;
             TypeMap[keyType.Name] = keyType;
+        }
+        public Type FindGenericFormatter<T>()
+        {
+            return GenericFormatterBuffer.FindAssignableType(typeof(T));
+        }
+        public void RegisterGenericFormatter(Type target, Type formatterType)
+        {
+            GenericFormatterBuffer.Add(target, formatterType);
         }
         public void RegisterInterface<T>(IYamlFormatter<T> formatter, Type interfaceType)
         {

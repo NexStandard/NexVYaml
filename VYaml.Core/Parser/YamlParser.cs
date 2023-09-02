@@ -868,7 +868,7 @@ namespace VYaml.Parser
         int RegisterAnchor(string anchorName)
         {
             var newId = ++lastAnchorId;
-            anchors[anchorName] = newId; // TODO: Avoid `ToString`
+            anchors[anchorName] = newId;
             return newId;
         }
 
