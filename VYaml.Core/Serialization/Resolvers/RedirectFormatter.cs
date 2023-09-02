@@ -6,7 +6,7 @@ using VYaml.Parser;
 namespace VYaml.Serialization.Resolvers
 {
     
-    public class RedirectFormatter<T> : IYamlFormatter<T>,IYamlFormatterResolver
+    public class RedirectFormatter<T> : IYamlFormatter<T>
     {
         public T Deserialize(ref YamlParser parser, YamlDeserializationContext context)
         {
@@ -20,11 +20,6 @@ namespace VYaml.Serialization.Resolvers
             return (T)method.Invoke(formatter, new object[] { parser,context });
         }
 
-        public IYamlFormatter<T1>? GetFormatter<T1>()
-        {
-            return NexYamlSerializerRegistry.Default.GetFormatter<T1>();
-        }
-        
         public void Serialize(ref Utf8YamlEmitter emitter, T value, YamlSerializationContext context)
         {
             Type type = typeof(T);
