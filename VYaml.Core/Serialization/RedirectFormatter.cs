@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using VYaml.Emitter;
 using VYaml.Parser;
 
-namespace VYaml.Serialization.Resolvers
+namespace VYaml.Serialization
 {
 
     public class RedirectFormatter<T> : IYamlFormatter<T>
