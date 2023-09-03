@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using VYaml.Core;
 using VYaml.Parser;
@@ -79,7 +80,7 @@ namespace VYaml.Serialization
         Dictionary<Type, Dictionary<Type, IYamlFormatter>> AbstractClassesBuffer = new();
         TypeDictionary GenericFormatterBuffer = new();
         Dictionary<string,Type> TypeMap = new();
-        
+        List<(Guid,Type,IYamlFormatter)> GenericTemporaryBuffer = new();
         public IYamlFormatter<T>? GetFormatter<T>()
         {
             if (DefinedFormatters.ContainsKey(typeof(T)))
@@ -90,6 +91,42 @@ namespace VYaml.Serialization
             return null;
         }
         public Type GetAliasType(string alias) => TypeMap[alias];
+        public Guid RequestGenericBufferStorage(IYamlFormatter formatter,Type formatterTarget)
+        {
+            Guid guid = Guid.NewGuid();
+            if(GenericTemporaryBuffer.Any(x => x.Item2 == formatterTarget))
+            {
+                return GenericTemporaryBuffer.Where(x => x.Item2 == formatterTarget).First().Item1;
+            }
+            else
+            {
+                GenericTemporaryBuffer.Add((guid, formatterTarget, formatter));
+            }
+            return guid;
+        }
+        public IYamlFormatter<T> GetGenericBufferedFormatter<T>()
+        {
+            Type type = typeof(T);
+            try
+            {
+                IYamlFormatter x = GenericTemporaryBuffer.First(x => x.Item2 == type).Item3;
+                x.GetType().GetInterfaces();
+                if(x is IYamlFormatter<T>)
+                {
+                    Console.Write(x.ToString());
+                }
+                return (IYamlFormatter<T>)x;
+
+            }
+            catch
+            {
+                throw new Exception("why");
+            }
+        }
+        public void RemoveGenericBuffer(Guid guid)
+        {
+            GenericTemporaryBuffer.RemoveAll(item => item.Item1 == guid);
+        }
         public IYamlFormatter? GetFormatter(Type type)
         {
             if (DefinedFormatters.ContainsKey(type))
@@ -103,7 +140,15 @@ namespace VYaml.Serialization
         {
             Type keyType = typeof(T);
             DefinedFormatters[keyType] = formatter;
-            TypeMap[keyType.Name] = keyType;
+            TypeMap[keyType.FullName] = keyType;
+        }
+        public void RegisterFormatter(Type formatter)
+        {
+            TypeMap[formatter.FullName] = formatter;
+        }
+        public Type FindGenericFormatter(Type target)
+        {
+            return GenericFormatterBuffer.FindAssignableType(target);
         }
         public Type FindGenericFormatter<T>()
         {

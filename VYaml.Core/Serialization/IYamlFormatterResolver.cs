@@ -29,13 +29,20 @@ namespace VYaml.Serialization
                     }
                     else
                     {
-                    formatter = new RedirectFormatter<T>();
+                        formatter = new RedirectFormatter<T>();
 
                     }
                 }
                 else
                 {
-                    formatter = NexYamlSerializerRegistry.Default.GetFormatter<T>();
+                    if(type.IsGenericType)
+                    {
+                        formatter = NexYamlSerializerRegistry.Default.GetGenericBufferedFormatter<T>();
+                    }
+                    else
+                    {
+                        formatter = NexYamlSerializerRegistry.Default.GetFormatter<T>();
+                    }
 
                 }
             }
