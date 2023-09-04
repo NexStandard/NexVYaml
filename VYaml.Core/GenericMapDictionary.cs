@@ -1,12 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using VYaml.Serialization;
 
 namespace VYaml.Core
 {
-    class TypeDictionary
+    class GenericMapDictionary
     {
-        private readonly Dictionary<TypeKey, Type> dictionary = new Dictionary<TypeKey, Type>();
+        private readonly Dictionary<TypeKey, Type> dictionary = new Dictionary<TypeKey, Type>()
+        {
+            [new TypeKey(typeof(List<>))] = typeof(ListFormatter<>),
+            [new TypeKey(typeof(KeyValuePair<,>))] = typeof(KeyValuePairFormatter<,>),
+            [new TypeKey(typeof(Dictionary<,>))] = typeof(DictionaryFormatter<,>),
+            [new TypeKey(typeof(Tuple<>))] = typeof(TupleFormatter<>),
+            [new TypeKey(typeof(Tuple<,>))] = typeof(TupleFormatter<,>),
+            [new TypeKey(typeof(Tuple<,,>))] = typeof(TupleFormatter<,,>),
+            [new TypeKey(typeof(Tuple<,,,>))] = typeof(TupleFormatter<,,,>),
+            [new TypeKey(typeof(Tuple<,,,,>))] = typeof(TupleFormatter<,,,,>),
+            [new TypeKey(typeof(Tuple<,,,,,>))] = typeof(TupleFormatter<,,,,,>),
+            [new TypeKey(typeof(Tuple<,,,,,,>))] = typeof(TupleFormatter<,,,,,,>),
+            [new TypeKey(typeof(Tuple<,,,,,,,>))] = typeof(TupleFormatter<,,,,,,,>)
+        };
 
         public void Add(Type type, Type value)
         {

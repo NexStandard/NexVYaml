@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using VYaml.Emitter;
 using VYaml.Internal;
 using VYaml.Parser;
-using VYaml.Serialization.Resolvers;
 
 namespace VYaml.Serialization
 {

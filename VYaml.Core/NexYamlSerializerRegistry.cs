@@ -78,8 +78,8 @@ namespace VYaml.Serialization
         };
         Dictionary<Type, Dictionary<Type, IYamlFormatter>> InterfaceBuffer = new();
         Dictionary<Type, Dictionary<Type, IYamlFormatter>> AbstractClassesBuffer = new();
-        TypeDictionary GenericFormatterBuffer = new();
-        Dictionary<string,Type> TypeMap = new();
+        GenericMapDictionary GenericFormatterBuffer = new();
+        Dictionary<string, Type> TypeMap = new();
         List<(Guid,Type,IYamlFormatter)> GenericTemporaryBuffer = new();
         public IYamlFormatter<T>? GetFormatter<T>()
         {
@@ -110,17 +110,16 @@ namespace VYaml.Serialization
             try
             {
                 IYamlFormatter x = GenericTemporaryBuffer.First(x => x.Item2 == type).Item3;
-                x.GetType().GetInterfaces();
-                if(x is IYamlFormatter<T>)
-                {
-                    Console.Write(x.ToString());
-                }
+                
                 return (IYamlFormatter<T>)x;
 
             }
             catch
             {
-                throw new Exception("why");
+                Type genericFormatter = NexYamlSerializerRegistry.Default.FindGenericFormatter<T>();
+                Type t = typeof(T);
+                Type genericType = genericFormatter.MakeGenericType(t.GenericTypeArguments);
+                return (IYamlFormatter<T>)Activator.CreateInstance(genericType);
             }
         }
         public void RemoveGenericBuffer(Guid guid)
