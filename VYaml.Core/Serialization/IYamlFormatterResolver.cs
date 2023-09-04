@@ -40,7 +40,7 @@ namespace VYaml.Serialization
                     }
                     else
                     {
-                        formatter = NexYamlSerializerRegistry.Default.GetFormatter<T>();
+                        formatter = GetRegistryFormatter<T>();
                     }
 
                 }
@@ -58,8 +58,28 @@ namespace VYaml.Serialization
             Throw(typeof(T), resolver);
             return default!; // not reachable
         }
+        private static IYamlFormatter<T> GetRegistryFormatter<T>()
+        {
+            return NexYamlSerializerRegistry.Default.GetFormatter<T>();
+        }
+        public static IYamlFormatter<T> FindCompatibleFormatter<T>(this IYamlFormatterResolver resolver,T value,Type targetType,out bool IsRedirected)
+        {
+            Type rootType = typeof(T);
+            IsRedirected = false;
+            
+            if (targetType == rootType)
+                return GetFormatterWithVerify<T>(resolver);
 
-        static void Throw(Type t, IYamlFormatterResolver resolver)
+            var formatter = NexYamlSerializerRegistry.Default.GetFormatter(targetType);
+
+            if(formatter == null)
+                return null;
+
+            IsRedirected = true;
+            return (IYamlFormatter<T>)formatter;
+            
+        }
+            static void Throw(Type t, IYamlFormatterResolver resolver)
         {
             throw new YamlSerializerException(t.FullName + $"{t} is not registered in resolver: {resolver.GetType()}");
         }

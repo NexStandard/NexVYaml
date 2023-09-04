@@ -12,7 +12,7 @@ using VYaml.Parser;
 namespace VYaml.Serialization
 {
 
-    public class RedirectFormatter<T> : IYamlFormatter<T>
+    public struct RedirectFormatter<T> : IYamlFormatter<T>
     {
         public T Deserialize(ref YamlParser parser, YamlDeserializationContext context)
         {
@@ -104,12 +104,13 @@ namespace VYaml.Serialization
             IYamlFormatter formatter;
             if (type.IsInterface)
             {
-
                 formatter = NexYamlSerializerRegistry.Default.FindInterfaceTypeBased<T>(value.GetType());
+                context.IsRedirected = true;
             }
             else if (type.IsAbstract)
             {
                 formatter = NexYamlSerializerRegistry.Default.FindAbstractTypeBased<T>(value.GetType());
+                context.IsRedirected = true;
             }
             else
             {
@@ -118,13 +119,13 @@ namespace VYaml.Serialization
                     Type formatterType = NexYamlSerializerRegistry.Default.FindGenericFormatter<T>();
                     Type closedType = formatterType.MakeGenericType(typeof(T).GenericTypeArguments);
                     formatter = (IYamlFormatter)Activator.CreateInstance(closedType);
-
                 }
                 else
                 {
                     formatter = NexYamlSerializerRegistry.Default.GetFormatter<T>();
                 }
             }
+            
             MethodInfo method = formatter.GetType().GetMethod("Serialize");
             method.Invoke(formatter, new object[] { emitter, value, context });
         }

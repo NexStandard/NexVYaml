@@ -21,7 +21,8 @@ namespace VYaml.Serialization
         static ByteArrayFormatter ByteArrayFormatter = new ByteArrayFormatter();
         public IYamlFormatterResolver Resolver { get; }
         public YamlEmitOptions EmitOptions { get; }
-
+        public bool IsRedirected { get; set; } = false;
+        public bool IsFirst { get; set; } = true;
         readonly byte[] primitiveValueBuffer;
         ArrayBufferWriter<byte>? arrayBufferWriter;
 
