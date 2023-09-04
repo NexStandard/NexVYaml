@@ -1,6 +1,4 @@
-﻿using Stride.Core.Reflection;
-using Stride.Core.Shaders.Ast;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -125,7 +123,7 @@ namespace VYaml.Serialization
                     formatter = NexYamlSerializerRegistry.Default.GetFormatter<T>();
                 }
             }
-            
+
             MethodInfo method = formatter.GetType().GetMethod("Serialize");
             method.Invoke(formatter, new object[] { emitter, value, context });
         }

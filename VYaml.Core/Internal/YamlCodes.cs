@@ -14,9 +14,9 @@ namespace VYaml.Internal
         public static readonly byte[] DocStart = { (byte)'.', (byte)'.', (byte)'.' };
         public static readonly byte[] CrLf = { Cr, Lf };
 
-        public static readonly byte[] Null0 = { (byte)'n', (byte)'u', (byte)'l', (byte)'l' };
-        public static readonly byte[] Null1 = { (byte)'N', (byte)'u', (byte)'l', (byte)'l' };
-        public static readonly byte[] Null2 = { (byte)'N', (byte)'U', (byte)'L', (byte)'L' };
+        public static readonly byte[] Null0 = { (byte)'!', (byte)'!', (byte)'n', (byte)'u', (byte)'l', (byte)'l' };
+        public static readonly byte[] Null1 = { (byte)'!', (byte)'!', (byte)'N', (byte)'u', (byte)'l', (byte)'l' };
+        public static readonly byte[] Null2 = { (byte)'!', (byte)'!', (byte)'N', (byte)'U', (byte)'L', (byte)'L' };
         public const byte NullAlias = (byte)'~';
 
         public static readonly byte[] True0 = { (byte)'t', (byte)'r', (byte)'u', (byte)'e' };
