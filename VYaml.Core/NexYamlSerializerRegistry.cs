@@ -56,25 +56,6 @@ namespace VYaml.Serialization
             { typeof(Guid), GuidFormatter.Instance },
             { typeof(Guid?), new StaticNullableFormatter<Guid>(GuidFormatter.Instance) },
             { typeof(Uri), UriFormatter.Instance },
-
-            // well known collections
-            { typeof(List<short>), new ListFormatter<short>() },
-            { typeof(List<int>), new ListFormatter<int>() },
-            { typeof(List<long>), new ListFormatter<long>() },
-            { typeof(List<ushort>), new ListFormatter<ushort>() },
-            { typeof(List<uint>), new ListFormatter<uint>() },
-            { typeof(List<ulong>), new ListFormatter<ulong>() },
-            { typeof(List<float>), new ListFormatter<float>() },
-            { typeof(List<double>), new ListFormatter<double>() },
-            { typeof(List<bool>), new ListFormatter<bool>() },
-            { typeof(List<byte>), new ListFormatter<byte>() },
-            { typeof(List<sbyte>), new ListFormatter<sbyte>() },
-            { typeof(List<DateTime>), new ListFormatter<DateTime>() },
-            { typeof(List<char>), new ListFormatter<char>() },
-            { typeof(List<string>), new ListFormatter<string>() },
-
-            { typeof(object[]), new ArrayFormatter<object>() },
-            { typeof(List<object>), new ListFormatter<object>() },
         };
         Dictionary<Type, Dictionary<Type, IYamlFormatter>> InterfaceBuffer = new();
         Dictionary<Type, Dictionary<Type, IYamlFormatter>> AbstractClassesBuffer = new();
@@ -125,6 +106,10 @@ namespace VYaml.Serialization
         public void RemoveGenericBuffer(Guid guid)
         {
             GenericTemporaryBuffer.RemoveAll(item => item.Item1 == guid);
+        }
+        public void ClearGenericBuffer()
+        {
+            GenericTemporaryBuffer.Clear();
         }
         public IYamlFormatter? GetFormatter(Type type)
         {
