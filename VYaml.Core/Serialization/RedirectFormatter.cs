@@ -25,15 +25,15 @@ namespace VYaml.Serialization
 
                 var x = ExtractGenericParameters(validGenericTag);
                 var startType = FindStartType(splitted);
-                var b = NexYamlSerializerRegistry.Default.FindGenericFormatter(startType);
+                var b = NexYamlSerializerRegistry.Instance.FindGenericFormatter(startType);
                 alias = b.MakeGenericType(x.ToArray());
                 formatter = (IYamlFormatter)Activator.CreateInstance(alias);
-                NexYamlSerializerRegistry.Default.RequestGenericBufferStorage(formatter, startType);
+                NexYamlSerializerRegistry.Instance.RequestGenericBufferStorage(formatter, startType);
             }
             else
             {
-                alias = NexYamlSerializerRegistry.Default.GetAliasType(tag.Handle);
-                formatter = NexYamlSerializerRegistry.Default.GetFormatter(alias);
+                alias = NexYamlSerializerRegistry.Instance.GetAliasType(tag.Handle);
+                formatter = NexYamlSerializerRegistry.Instance.GetFormatter(alias);
             }
             MethodInfo method = formatter.GetType().GetMethod(nameof(Deserialize));
             return (T)method.Invoke(formatter, new object[] { parser, context });
@@ -102,25 +102,25 @@ namespace VYaml.Serialization
             IYamlFormatter formatter;
             if (type.IsInterface)
             {
-                formatter = NexYamlSerializerRegistry.Default.FindInterfaceTypeBased<T>(value.GetType());
+                formatter = NexYamlSerializerRegistry.Instance.FindInterfaceTypeBased<T>(value.GetType());
                 context.IsRedirected = true;
             }
             else if (type.IsAbstract)
             {
-                formatter = NexYamlSerializerRegistry.Default.FindAbstractTypeBased<T>(value.GetType());
+                formatter = NexYamlSerializerRegistry.Instance.FindAbstractTypeBased<T>(value.GetType());
                 context.IsRedirected = true;
             }
             else
             {
                 if (type.IsGenericType)
                 {
-                    Type formatterType = NexYamlSerializerRegistry.Default.FindGenericFormatter<T>();
+                    Type formatterType = NexYamlSerializerRegistry.Instance.FindGenericFormatter<T>();
                     Type closedType = formatterType.MakeGenericType(typeof(T).GenericTypeArguments);
                     formatter = (IYamlFormatter)Activator.CreateInstance(closedType);
                 }
                 else
                 {
-                    formatter = NexYamlSerializerRegistry.Default.GetFormatter<T>();
+                    formatter = NexYamlSerializerRegistry.Instance.GetFormatter<T>();
                 }
             }
 

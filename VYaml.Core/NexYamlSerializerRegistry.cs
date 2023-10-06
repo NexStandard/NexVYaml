@@ -6,12 +6,13 @@ using System.Reflection;
 using System.Text;
 using VYaml.Core;
 using VYaml.Parser;
+using VYaml.Serialization;
 
-namespace VYaml.Serialization
+namespace VYaml
 {
     public class NexYamlSerializerRegistry : IYamlFormatterResolver
     {
-        public static NexYamlSerializerRegistry Default = new NexYamlSerializerRegistry();
+        public static NexYamlSerializerRegistry Instance = new NexYamlSerializerRegistry();
         Dictionary<Type, IYamlFormatter> DefinedFormatters = new Dictionary<Type, IYamlFormatter>()
         {
             // Primitive
@@ -97,7 +98,7 @@ namespace VYaml.Serialization
             }
             catch
             {
-                Type genericFormatter = NexYamlSerializerRegistry.Default.FindGenericFormatter<T>();
+                Type genericFormatter = NexYamlSerializerRegistry.Instance.FindGenericFormatter<T>();
                 Type t = typeof(T);
                 Type genericType = genericFormatter.MakeGenericType(t.GenericTypeArguments);
                 return (IYamlFormatter<T>)Activator.CreateInstance(genericType);

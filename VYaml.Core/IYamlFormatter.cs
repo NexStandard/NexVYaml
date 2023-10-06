@@ -1,12 +1,14 @@
 #nullable enable
+using VYaml;
 using VYaml.Emitter;
 using VYaml.Parser;
+using VYaml.Serialization;
 
-namespace VYaml.Serialization
+namespace VYaml
 {
     public interface IYamlFormatter
     {
-        
+
     }
     /// <summary>
     /// Represents a YAML formatter for objects of type <typeparamref name="T"/>.

@@ -7,7 +7,7 @@ namespace VYaml.Serialization
     {
         public static YamlSerializerOptions Standard => new()
         {
-            Resolver = NexYamlSerializerRegistry.Default
+            Resolver = NexYamlSerializerRegistry.Instance
         };
 
         public IYamlFormatterResolver Resolver { get; set; } = null!;

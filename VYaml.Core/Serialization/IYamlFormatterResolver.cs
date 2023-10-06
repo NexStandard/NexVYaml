@@ -36,7 +36,7 @@ namespace VYaml.Serialization
                 {
                     if(type.IsGenericType)
                     {
-                        formatter = NexYamlSerializerRegistry.Default.GetGenericBufferedFormatter<T>();
+                        formatter = NexYamlSerializerRegistry.Instance.GetGenericBufferedFormatter<T>();
                     }
                     else
                     {
@@ -60,7 +60,7 @@ namespace VYaml.Serialization
         }
         private static IYamlFormatter<T> GetRegistryFormatter<T>()
         {
-            return NexYamlSerializerRegistry.Default.GetFormatter<T>();
+            return NexYamlSerializerRegistry.Instance.GetFormatter<T>();
         }
         public static IYamlFormatter<T> FindCompatibleFormatter<T>(this IYamlFormatterResolver resolver,T value,Type targetType,out bool IsRedirected)
         {
@@ -70,7 +70,7 @@ namespace VYaml.Serialization
             if (targetType == rootType)
                 return GetFormatterWithVerify<T>(resolver);
 
-            var formatter = NexYamlSerializerRegistry.Default.GetFormatter(targetType);
+            var formatter = NexYamlSerializerRegistry.Instance.GetFormatter(targetType);
 
             if(formatter == null)
                 return null;
