@@ -635,7 +635,7 @@ namespace VYaml.Emitter
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        void BeginScalar(Span<byte> output, ref int offset)
+        public void BeginScalar(Span<byte> output, ref int offset)
         {
             switch (CurrentState)
             {
@@ -741,7 +741,7 @@ namespace VYaml.Emitter
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        void EndScalar(Span<byte> output, ref int offset)
+        public void EndScalar(Span<byte> output, ref int offset)
         {
             switch (CurrentState)
             {

@@ -22,6 +22,7 @@ namespace VYaml.Serialization
         public IYamlFormatterResolver Resolver { get; }
         public YamlEmitOptions EmitOptions { get; }
         public bool IsRedirected { get; set; } = false;
+        public bool IsMappingEnabled { get; set; } = true;
         public bool IsFirst { get; set; } = true;
         readonly byte[] primitiveValueBuffer;
         ArrayBufferWriter<byte>? arrayBufferWriter;

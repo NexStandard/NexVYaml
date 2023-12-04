@@ -26,7 +26,7 @@ namespace VYaml.Core
         {
             dictionary[new TypeKey(type)] = value;
         }
-        public Type FindAssignableType(Type searchType)
+        public Type? FindAssignableType(Type searchType)
         {
             Type value;
             return dictionary.TryGetValue(new TypeKey(searchType), out value) ? value : null;

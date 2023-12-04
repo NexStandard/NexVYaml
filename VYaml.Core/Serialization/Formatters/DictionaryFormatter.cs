@@ -1,5 +1,9 @@
 #nullable enable
+using System;
+using System.Buffers.Text;
 using System.Collections.Generic;
+using System.Text;
+using System.Text.Unicode;
 using VYaml.Emitter;
 using VYaml.Parser;
 

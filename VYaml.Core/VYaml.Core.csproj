@@ -1,14 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <ImplicitUsings>disable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <LangVersion>9</LangVersion>
-        <ImplicitUsings>disable</ImplicitUsings>
-        <RootNamespace>VYaml</RootNamespace>
-        <TargetFramework>net6.0-windows</TargetFramework>
-        <Description>VYaml core apis</Description>
-    </PropertyGroup>
-    <ItemGroup>
-		<PackageReference Include="Stride.Engine" Version="4.1.0.1838" />
-    </ItemGroup>
+  <PropertyGroup>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>9</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <RootNamespace>VYaml</RootNamespace>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Description>VYaml core apis</Description>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
 </Project>

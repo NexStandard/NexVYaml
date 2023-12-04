@@ -3,6 +3,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using VYaml.Emitter;
 using VYaml.Internal;
@@ -89,7 +90,10 @@ namespace VYaml.Serialization
             var parser = YamlParser.FromSequence(new ReadOnlySequence<byte>(memory));
             return Deserialize<T>(ref parser, options);
         }
-
+        public static T Deserialize<T>(string yaml, YamlSerializerOptions? options = null)
+        {
+            return Deserialize<T>(Encoding.UTF8.GetBytes(yaml), options);
+        }
         public static T Deserialize<T>(in ReadOnlySequence<byte> sequence, YamlSerializerOptions? options = null)
         {
             var parser = YamlParser.FromSequence(sequence);
